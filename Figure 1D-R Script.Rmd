@@ -1,0 +1,131 @@
+---
+title: "Figure 1D R Script" 
+author: "CL"
+date: "2026-10-26"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+setwd("xxx")
+
+#Install packages "data.table","ggplot2", and "ggpubr"
+install.packages("data.table")
+library(data.table)
+install.packages("ggplot2")
+library(ggplot2)
+install.packages("ggpubr")
+library(ggpubr)
+
+#Read data Figure_1D_dat.csv
+dat<-fread("Figure_1D_dat.csv")
+
+#Define the Immune_elicitor column as a factor
+dat$Immune_elicitor <- factor(dat$Immune_elicitor, levels = c("Mock", "flg22_Pa"))
+
+#Install more packages "ggsignif", "dplyr", and "magrittr"
+install.packages("ggsignif")
+install.packages("dplyr")
+install.packages("magrittr")
+library(dplyr)   
+library(magrittr) 
+library(ggsignif)
+
+#Define the Strain and column as a factor
+dat$Strain<-factor(dat$Strain,levels=c("NB","WT","A8-C2","A15-C10","B9-E1","B9-E5","C14-F10"))
+dat$SampleID<-as.factor(dat$SampleID)
+
+# Recode your facet variable so "flg22" comes first
+dat$Immune_elicitor <- factor(dat$Immune_elicitor, levels = c("Mock", "flg22_Pa")) 
+dat$Root_length <- as.numeric(as.character(dat$Root_length))
+
+# Overall normality check
+shapiro.test(dat$Root_length)
+qqnorm(dat$Root_length)
+qqline(dat$Root_length, col = "red")
+
+# Run Shapiro–Wilk test on Concentration values from Mock group
+library(dplyr)
+library(rstatix)
+
+# Subset only rows where Immune_elicitor == "Mock"
+mock_data <- subset(dat, Immune_elicitor == "Mock")
+
+mock_data %>%
+  group_by(Strain) %>%
+  shapiro_test(Root_length)
+
+# Subset only rows where Immune_elicitor == "flg22_Pa"
+flg22_Pa_data <- subset(dat, Immune_elicitor == "flg22_Pa")
+
+# Run Shapiro–Wilk test on Concentration values from flg22_Pa group
+flg22_Pa_data %>%
+  group_by(Strain) %>%
+  shapiro_test(Root_length)
+
+#Dunn's test
+library(FSA)
+Dun_result_dat<-dunnTest(Root_length ~ SampleID, data = dat, method = "bh")  # or "bonferroni"
+write.csv(Dun_result_dat$res, "Dun_result_dat_flg22_Pa.csv", row.names = FALSE)
+
+Dun_result_dat_mock<-dunnTest(Root_length ~ Strain, data = mock_data, method = "bh")  # or "bonferroni"
+write.csv(Dun_result_dat_mock$res, "Dun_result_dat_mock_flg22_Pa.csv", row.names = FALSE)
+
+Dun_result_dat_flg22_flg22_Ps<-dunnTest(Root_length ~ Strain, data = flg22_Pa_data, method = "bh")  # or "bonferroni"
+write.csv(Dun_result_dat_flg22_flg22_Pa$res, "Dun_result_dat_flg22_flg22_Pa_flg22_Pa.csv", row.names = FALSE)
+
+# Define a 6-color palette
+strain_col13 <- c(
+  "NB" = "#0c74b9",
+  "WT" = "#d55427",
+  "A8-C2" = "#e5ae23",
+  "A15-C10" = "#802f89",
+  "B9-E1" = "#8a7067",
+  "B9-E5" = "#ffbca7",
+  "C14-F10" = "#484f98"
+)
+
+#Define strain labels
+strain_labels <- c(
+  "A8-C2"      = expression(italic("ppiD")*"::Tn"),
+  "A15-C10"     = expression(italic("tonB1")*"::Tn"),
+  "B9-E1"  = expression(italic("RS09010")*"::Tn"),
+  "B9-E5"  = expression(italic("purD")*"::Tn"),
+  "C14-F10"  = expression(italic("pmbA")*"::Tn"))
+
+#Run gpplot to make a boxplot 
+p <- ggplot(dat, aes(x = Strain, y = Root_length,fill = Strain)) + 
+  geom_boxplot(width = 0.6, color = "black", size = 0.6,alpha = 0.5) +
+  geom_jitter(aes(color = Strain), size = 3, alpha = 0.6,
+              position = position_jitter(width = 0.2)) +
+  facet_wrap(~ Immune_elicitor, scales = "free_x", labeller = labeller(Immune_elicitor = c("Mock" = "Mock", "flg22_Pa" = "flg22-Pa"))) +
+    scale_fill_manual(values = strain_col13,labels = strain_labels) +
+  scale_color_manual(values = strain_col13,labels = strain_labels) +
+  labs(x = NULL, y = "Root elongation (cm)") +
+  theme_bw(base_size = 16) +
+  theme(
+    axis.title.x = element_text(size = 24, color = "black", face = "bold"),
+    axis.title.y = element_text(size = 24, color = "black", face = "bold"),
+    axis.text.x  = element_blank(),
+    axis.text.y  = element_text(size = 20, color = "black"),
+    legend.title = element_text(size = 24, color = "black", face = "bold"),
+    legend.text  = element_text(size = 20, color = "black"),
+    panel.border = element_rect(size = 2),
+    axis.line = element_line(size = 1.2),
+    axis.ticks = element_line(size = 1.5),
+    strip.text  = element_text(size = 22, face = "bold", color = "black"),  # facet title size
+    panel.grid = element_blank()
+  ) +
+  coord_cartesian(ylim = c(0, 10)) 
+
+#Show the boxplot
+p
+
+#Save the boxplot as a tiff file
+ggsave("Figure_1D.tif", plot = p, width = 10, height = 5, units = "in", dpi = 300, device = "tiff",compression = "lzw")
+
+#Save the boxplot as pdf file
+ggsave("Figure_1D.pdf", plot = p, width = 10, height = 5, units = "in", device = cairo_pdf)
+```
+
