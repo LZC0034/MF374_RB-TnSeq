@@ -1,0 +1,21 @@
+molecule,gene,Target_gene,start,end,strand,orientation,Annotation 
+Part 1,tpiA,others,582540,583292,reverse,0,triosephosphate isomerase
+Part 1,ppiD,ppiD,583433,585340,forward,1,peptidyl-prolyl cis-trans isomerase D
+Part 1,trpE,others,585337,586854,forward,1,anthranilate synthase component I
+Part 1,BLR19_RS02895 ,others,586851,587054,reverse,0,hypothetical protein 
+Part 1,trpG,others,587143,587733,forward,1,anthranilate synthase component II
+Part 1,trpD,others,587736,588773,forward,1,anthranilate phosphoribosyltrasferase
+Part 1,trpC,others,588770,589564,forward,1,indole-3-glycerol phosphate synthase
+Part 2,trnH,others,736873,736949,reverse,0,tRNA_His_GTG
+Part 2,tonB,tonB,737100,737819,reverse,0,Periplasmic protein TonB
+Part 2,exbD,others,737834,738268,reverse,0,Biopolymer transport protein ExbD
+Part 2,exbB,others,738274,739155,reverse,0,Biopolymer transport protein ExbB
+Part 3,BLR19_RS09005,others,318578,319039,forward,1,hypothetical protein 
+Part 3,BLR19_RS09010,BLR19_RS09010,319097,319870,forward,1,3'-5' exonuclease
+Part 3,BLR19_RS09020,others,320307,322034,reverse,0,Recombinase family protein
+Part 4,BLR19_RS05510,others,1111183,1111833,forward,1,"murein L,D-transpeptidase catalytic domain family protein"
+Part 4,purD,purD,1111837,1113111,reverse,0,phosphoribosylamine--glycine ligase
+Part 4,BLR19_RS05520,others,1113185,1113616,reverse,0,hypothetical protein 
+Part 5,BLR19_RS05450,others,1100166,1100573,forward,1,MAPEG family protein
+Part 5,pmbA,pmbA,1100628,1101983,forward,1,Predocted Zn-dependent protease 
+Part 5,cysQ,others,1101980,1102777,forward,1,"3'(2'),5'-bisphosphate nucleotidase CysQ"
