@@ -67,13 +67,13 @@ flg22_Pa_data %>%
 #Dunn's test
 library(FSA)
 Dun_result_dat<-dunnTest(Root_length ~ SampleID, data = dat, method = "bh")  # or "bonferroni"
-write.csv(Dun_result_dat$res, "Dun_result_dat_flg22_Pa.csv", row.names = FALSE)
+write.csv(Dun_result_dat$res, "Dun_result_dat_SampleID.csv", row.names = FALSE)
 
 Dun_result_dat_mock<-dunnTest(Root_length ~ Strain, data = mock_data, method = "bh")  # or "bonferroni"
-write.csv(Dun_result_dat_mock$res, "Dun_result_dat_mock_flg22_Pa.csv", row.names = FALSE)
+write.csv(Dun_result_dat_mock$res, "Dun_result_dat_mock_Strain.csv", row.names = FALSE)
 
-Dun_result_dat_flg22_flg22_Ps<-dunnTest(Root_length ~ Strain, data = flg22_Pa_data, method = "bh")  # or "bonferroni"
-write.csv(Dun_result_dat_flg22_flg22_Pa$res, "Dun_result_dat_flg22_flg22_Pa_flg22_Pa.csv", row.names = FALSE)
+Dun_result_dat_flg22_flg22_Pa<-dunnTest(Root_length ~ Strain, data = flg22_Pa_data, method = "bh")  # or "bonferroni"
+write.csv(Dun_result_dat_flg22_flg22_Pa$res, "Dun_result_dat_flg22_Strain.csv", row.names = FALSE)
 
 # Define a 6-color palette 
 strain_col13 <- c(
