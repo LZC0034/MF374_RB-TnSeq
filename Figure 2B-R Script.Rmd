@@ -1,7 +1,7 @@
 ---
-title: "GK-RGI-1uM flg22-Ps-Knockouts-pWER-9dpi-B1_5"
+title: "Figure 2B R Script"
 author: "CL"
-date: "2026-01-07"
+date: "2026-10-26"
 output: html_document
 editor_options: 
   chunk_output_type: console
