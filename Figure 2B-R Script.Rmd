@@ -8,7 +8,7 @@ editor_options:
 ---
 
 ```{r setup, include=FALSE}
-setwd("C:/Users/cl9312/OneDrive - Princeton University/Desktop/Princeton University/Research/P1_MF374 RB-TnSeq project/Results/GK-RGI-Root Colonization-square plates-B1-B5/data_analysis")
+setwd("xxx")
 
 #Install packages "data.table", "ggplot2", and "ggpubr"   
 install.packages("data.table")
