@@ -16,8 +16,8 @@ install.packages("gggenes")
 library(ggplot2)
 library(gggenes)
 
-#Read tn_mutant_gene.csv file
-tn_mutant_genes<-read.csv("tn_mutant_genes.csv")
+#Read Figure_1B_dat.csv file
+tn_mutant_genes<-read.csv("Figure_1B_dat.csv")
 
 #Define Target_gene as a factor
 tn_mutant_genes$Target_gene <- factor(tn_mutant_genes$Target_gene,
