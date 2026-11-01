@@ -1,0 +1,90 @@
+---
+title: "Fig. S1D R Script"
+author: "Chao Liao"
+date: "2026-01-22"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+#Set working directory
+setwd("xxx")
+
+#Install pakage "data.table" and invoke the library
+install.packages("data.table")
+library(data.table)
+
+#Read the Fig.S1D_dat.csv file
+MF374_tnseq_dat<-fread("Fig.S1D_dat.csv")
+
+#Invoke libraries ggplot2, dplyr, ggsignif
+library(ggplot2)
+library(dplyr)
+library(ggsignif)
+
+#Define SampleID nad Vector as characters
+SampleID<-as.character(MF374_tnseq_dat$SampleID)
+Vector<-as.character(MF374_tnseq_dat$Vector)
+
+#Define number of number of unique barcodes (NMUB) as numeric
+NMUB<-as.numeric(MF374_tnseq_dat$NMUB)
+Mean<-as.numeric(MF374_tnseq_dat$Mean)
+MF374_tnseq_dat_NMUB <- MF374_tnseq_dat %>%
+  group_by(Vector) %>%
+  summarise(
+    mean_NMUB = mean(NMUB, na.rm = TRUE),
+    sd_NMUB = sd(NMUB, na.rm = TRUE),
+    n = n(),
+    sem_NMUB = sd_NMUB / sqrt(n)
+  )
+
+mean_NMUB<-as.numeric(MF374_tnseq_dat_NMUB$mean_NMUB)
+
+
+# Perform the t-test to calculate the p-value
+t_test_result <- t.test(NMUB ~ Vector, data = MF374_tnseq_dat)  
+p_value <- t_test_result$p.value  
+
+# Create a formatted annotation for the significance  
+formatted_annotation <- paste("P =", round(p_value, 3))  # For example: "P = 0.0123" 
+
+#Run gpplot to make barplot
+barplot_MF374_tnseq_dat <- ggplot() +
+  geom_bar(data = MF374_tnseq_dat, aes(x = SampleID, y = Mean, fill = Vector), stat = "identity", position = position_dodge(), width = 0.7) +
+  geom_jitter(data = MF374_tnseq_dat, aes(x = SampleID, y = NMUB, shape = Vector), size = 4,color = "black",position = position_dodge(0.7),alpha=0.7) +
+  scale_shape_manual(values = c(17, 17)) +
+  scale_fill_manual(values = c('#0c74b9', '#d55427'))+
+   # Explicit position to ensure it's within limits  
+  labs( 
+    x = NULL,  
+    y = "Number of mapped unique barcode",fill= "RB-TnSeq library",shape="RB-TnSeq library"  
+  ) +  
+  theme_minimal() +  
+  theme(  
+    axis.title.x = element_text(size = 20, color = "black"),  
+    axis.title.y = element_text(size = 20, color = "black"),  
+    axis.text.x = element_blank(),  
+    axis.text.y = element_text(size = 18, color = "black"),  
+    axis.line.x = element_line(arrow = arrow(type = "closed", ends = "last", length = unit(0.25, "cm")), color = "black", size = 1.5),  
+    axis.line.y = element_line(arrow = arrow(type = "closed", ends = "last", length = unit(0.25, "cm")), color = "black", size = 1.5),  
+    legend.title = element_text(size = 20),  
+    legend.text = element_text(size = 18),  
+    panel.background = element_rect(fill = "white", color = NA),  
+    panel.grid.major = element_blank(),  
+    panel.grid.minor = element_blank(),  
+    title = element_text(size = 18, color = "black")
+  ) +  
+  geom_errorbar(data = MF374_tnseq_dat_NMUB, aes(x = Vector, ymin = mean_NMUB - sem_NMUB, ymax = mean_NMUB + sem_NMUB), width = 0.2, size = 1.5, position = position_dodge(0.9))
+
+#Show the barplot
+barplot_MF374_tnseq_dat
+
+#Save the barplot as a tiff file
+ggsave(filename = "barplot_MF374_tnseq_dat3.tiff", plot = barplot_MF374_tnseq_dat, width = 8, height = 6, dpi = 300,compression = "lzw")
+
+#Save the barplot as a svg file
+ggsave(filename = "barplot_MF374_tnseq_dat3.svg", plot = barplot_MF374_tnseq_dat, width = 8, height = 6, dpi = 300,device = "svg")
+
+```
+
