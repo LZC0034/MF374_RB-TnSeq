@@ -1,0 +1,34 @@
+ID,Accession,Begin,End,Chromosome,Orientation,Name,Function,Symbol,Gene ID,Gene Type,Transcripts accession,Protein accession,Protein length,Locus tag,Strain,Label,Protein_index,Index
+TonB1 (239aa),NZ_FNKT01000001.1,737100,737819,,minus,energy transducer TonB,Energy transducer,,0,protein-coding,,WP_017505195.1,239,BLR19_RS15045,Brevundimonas sp. MF374,TonB,TonB1,TonB1
+TonB2 (113aa),NZ_FNKT01000001.1,166810,167151,,minus,TonB family protein,Unknown,,0,protein-coding,,WP_091746061.1,113,BLR19_RS00740,Brevundimonas sp. MF374,TonB,TonB2,TonB2
+TonB3 (243aa),NZ_FNKT01000001.1,823998,824729,,plus,TonB family protein,Unknown ,,0,protein-coding,,WP_091747482.1,243,BLR19_RS04075,Brevundimonas sp. MF374,TonB,TonB3,TonB3
+TonB4 (227aa),NZ_FNKT01000001.1,251416,252099,,plus,energy transducer TonB,Energy transducer,,0,protein-coding,,WP_255366362.1,227,BLR19_RS01190,Brevundimonas sp. MF374,TonB,TonB4,TonB4
+TonB10 (135aa),NZ_JIBD01000018.1,179556,179963,,minus,energy transducer TonB,Energy transducer,,0,protein-coding,,WP_026635018.1,135,N515_RS0111400,Dyella japonica MF79,TonB,TonB10,TonB10
+TonB11 (151aa),NZ_JIBD01000023.1,28600,29055,,plus,energy transducer TonB,Energy transducer,,0,protein-coding,,WP_026635530.1,151,N515_RS0114370,Dyella japonica MF79,TonB,TonB11,TonB11
+TonB12 (343aa),NZ_JIBD01000023.1,85537,86568,,plus,energy transducer TonB,Energy transducer,,0,protein-coding,,WP_026635578.1,343,N515_RS0114630,Dyella japonica MF79,TonB,TonB12,TonB12
+TonB13 (223aa),NZ_KK211141.1,124514,125185,,minus,energy transducer TonB,Energy transducer,,0,protein-coding,,WP_026635767.1,223,N515_RS26480,Dyella japonica MF79,TonB,TonB13,TonB13
+TonB14 (133aa),NZ_JIBD01000018.1,179044,179445,,minus,energy transducer TonB,Energy transducer,,0,protein-coding,,WP_143096530.1,133,N515_RS0111395,Dyella japonica MF79,TonB,TonB14,TonB14
+TonB5 (286aa),NZ_JIBD01000015.1,132722,133582,,plus,energy transducer TonB,Energy transducer,,0,protein-coding,,WP_026633544.1,286,N515_RS0102985,Dyella japonica MF79,TonB,TonB5,TonB5
+TonB6 (220aa),NZ_JIBD01000016.1,279105,279767,,minus,energy transducer TonB family protein,Unknown ,,0,protein-coding,,WP_026634255.1,220,N515_RS0107120,Dyella japonica MF79,TonB,TonB6,TonB6
+TonB7 (175aa),NZ_JIBD01000017.1,34377,34904,,minus,energy transducer TonB family protein,Unknown,,0,protein-coding,,WP_026634614.1,175,N515_RS0109135,Dyella japonica MF79,TonB,TonB7,TonB7
+TonB8 (219aa),NZ_JIBD01000017.1,119108,119767,,minus,energy transducer TonB,Energy transducer,,0,protein-coding,,WP_026634682.1,219,N515_RS0109505,Dyella japonica MF79,TonB,TonB8,TonB8
+TonB9 (322aa),NZ_JIBD01000017.1,166898,167866,,plus,energy transducer TonB,Energy transducer,,0,protein-coding,,WP_026634718.1,322,N515_RS0109695,Dyella japonica MF79,TonB,TonB9,TonB9
+TonB15 (301aa),NZ_CP007637.1,5768246,5769151,,plus,energy transducer TonB,Energy transducer,,0,protein-coding,,WP_010207219.1,301,PS417_RS01850,Pseudomonas simiae WCS417,TonB,TonB15,TonB15
+TonB16 (249aa),NZ_CP007637.1,6004968,6005717,,plus,TonB family protein,Unknown,,0,protein-coding,,WP_010207522.1,249,PS417_RS00685,Pseudomonas simiae WCS417,TonB,TonB16,TonB16
+TonB17 (257aa),NZ_CP007637.1,3517663,3518436,,minus,energy transducer TonB,Energy transducer,,0,protein-coding,,WP_010209729.1,257,PS417_RS12140,Pseudomonas simiae WCS417,TonB,TonB17,TonB17
+TonB18 (214aa),NZ_CP007637.1,2409694,2410338,,plus,TonB family protein,Unknown,,0,protein-coding,,WP_010211162.1,214,PS417_RS16770,Pseudomonas simiae WCS417,TonB,TonB18,TonB18
+TonB19 (137aa),NZ_CP007637.1,2132369,2132782,,plus,TonB family protein,Unknown,,0,protein-coding,,WP_010211484.1,137,PS417_RS18110,Pseudomonas simiae WCS417,TonB,TonB19,TonB19
+TonB20 (242aa),NZ_CP007637.1,1989784,1990512,,minus,energy transducer TonB,Energy transducer,,0,protein-coding,,WP_010211659.1,242,PS417_RS18765,Pseudomonas simiae WCS417,TonB,TonB20,TonB20
+TonB21 (208aa),NZ_CP007637.1,131993,132619,,plus,energy transducer TonB,Energy transducer,,0,protein-coding,,WP_010214265.1,208,PS417_RS27045,Pseudomonas simiae WCS417,TonB,TonB21,TonB21
+TonB22 (234aa),NZ_CP007637.1,2447154,2447858,,plus,energy transducer TonB,Energy transducer,,0,protein-coding,,WP_038453137.1,234,PS417_RS16650,Pseudomonas simiae WCS417,TonB,TonB22,TonB22
+TonB23 (148aa),NZ_LMHR01000024.1,10928,11374,,plus,energy transducer TonB,Energy transducer,,0,protein-coding,,WP_056713974.1,148,ASD82_RS00720,Rhodanobacter sp. R179,TonB,TonB23,TonB23
+TonB24 (254aa),NZ_LMHR01000028.1,7254,8018,,minus,energy transducer TonB,Energy transducer,,0,protein-coding,,WP_056714097.1,254,ASD82_RS00970,Rhodanobacter sp. R179,TonB,TonB24,TonB24
+TonB25 (251aa),NZ_LMHR01000028.1,8089,8844,,minus,TonB family protein,Unknown,,0,protein-coding,,WP_056714099.1,251,ASD82_RS00975,Rhodanobacter sp. R179,TonB,TonB25,TonB25
+TonB26 (184aa),NZ_LMHR01000054.1,25700,26254,,minus,energy transducer TonB,Energy transducer,,0,protein-coding,,WP_056715838.1,184,ASD82_RS04130,Rhodanobacter sp. R179,TonB,TonB26,TonB26
+TonB27 (347aa),NZ_LMHR01000059.1,49531,50574,,minus,energy transducer TonB,Energy transducer,,0,protein-coding,,WP_056716284.1,347,ASD82_RS04920,Rhodanobacter sp. R179,TonB,TonB27,TonB27
+TonB28 (219aa),NZ_LMHR01000061.1,19019,19678,,minus,energy transducer TonB,Energy transducer,,0,protein-coding,,WP_056716471.1,219,ASD82_RS05215,Rhodanobacter sp. R179,TonB,TonB28,TonB28
+TonB29 (289aa),NZ_LMHR01000080.1,8858,9727,,minus,energy transducer TonB,Energy transducer,,0,protein-coding,,WP_056717816.1,289,ASD82_RS10645,Rhodanobacter sp. R179,TonB,TonB29,TonB29
+TonB30 (224aa),NZ_LMHR01000083.1,52978,53652,,plus,energy transducer TonB,Energy transducer,,0,protein-coding,,WP_056718118.1,224,ASD82_RS12305,Rhodanobacter sp. R179,TonB,TonB30,TonB30
+TonB31 (222aa),NZ_LMHR01000083.1,64605,65273,,minus,energy transducer TonB,Energy transducer,,0,protein-coding,,WP_056718132.1,222,ASD82_RS12375,Rhodanobacter sp. R179,TonB,TonB31,TonB31
+TonB32 (323aa),NZ_LMHR01000030.1,10734,11705,,plus,energy transducer TonB,Energy transducer,,0,protein-coding,,WP_235580600.1,323,ASD82_RS01190,Rhodanobacter sp. R179,TonB,TonB32,TonB32
+TonB33 (239aa),NC_000913.3,1311089,1311808,,plus,Ton complex subunit TonB,Energy transducer,tonB,945843,protein-coding,,NP_415768.1,239,b1252,Escherichia coli K12,TonB,TonB33,TonB33
