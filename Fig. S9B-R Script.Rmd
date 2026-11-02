@@ -1,0 +1,183 @@
+---
+title: "Fig. S9B-R Script"
+author: "CL"
+date: "2026-10-26"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+#Set the working directory
+setwd("xxx")
+
+#Install packages "rlang", "BiocManager", "ggtree", "ggtreeExtra", "reshape2", "ggstar", "remotes", and "YuLab-SMU/TDbook"  
+install.packages("rlang")
+install.packages("BiocManager")
+BiocManager::install("ggtree")
+BiocManager::install("ggtreeExtra")
+install.packages("reshape2")
+install.packages("ggstar")
+install.packages("remotes")
+remotes::install_github("YuLab-SMU/TDbook")
+
+#Invoke the libraries
+library(rlang)
+library(ggtree)
+library(ggtreeExtra)
+library(ggplot2)
+library(ggnewscale)
+library(reshape2)
+library(dplyr)
+library(tidytree)
+library(ggstar)
+library(TDbook)
+library(treeio)
+library(data.table)
+
+
+# load tr and dat from the TDbook package 
+dat <- fread("Fig. S9B_dat.csv")
+tr <- read.tree("Fig. S9B_dat.nwk" )
+
+#Define strains
+strains <- c("Brevundimonas sp. MF374", "Dyella japonica MF79","Pseudomonas simiae WCS417",
+               "Rhodanobacter sp. R179", "Escherichia coli K12"
+               )
+
+# For the tip points
+dat1 <- dat %>% select(c("ID", "Strain"))
+dat1$Strain <- factor(dat1$Strain, levels=strains)
+#Straincolors <- dat1[match(strains,dat1$Strain),Strain_colour]
+
+# For the heatmap layer
+dat2 <- dat %>% select(c("ID", "Function"))
+dat2$Function<- factor(dat2$Function, levels=c("Copper receptor","Fe(3+) dicitrate receptor","Hemoglobin/transferrin/lactoferrin receptor","Siderophore receptor","Vitamin B12 receptor","Receptor plug","Unknown receptor"))
+
+# For the strain group
+dat3 <- dat %>% select(c("ID","Protein accession","Strain"))
+dat3 <- aggregate(.~Strain, dat3, FUN=paste, collapse=",")
+TBDTs <- lapply(dat3$ID, function(x){unlist(strsplit(x,split=","))})
+names(TBDTs) <- dat3$Strain
+
+tr2 <- groupOTU(tr, TBDTs, "Strain")   #ID in tr should match with that in clades
+Strain <- NULL
+tr2$edge.length <- NULL
+
+tr2$tip.label <- gsub("^'|'$", "", tr2$tip.label)   # remove leading/trailing '
+tr2$tip.label <- gsub(" aa", "aa", tr2$tip.label)   # remove space before aa
+
+setdiff(tr2$tip.label, dat1$ID)
+setdiff(dat1$ID, tr2$tip.label)
+
+#Define colors for strains and functions
+Genimi_color<-c("#ff791d","#4A7C59", "#A52A2A","#17becf", "#9B766F")
+Function_color<-c("#b3ffff","#ffd8d9","#fff2a2","#fea8ff","#d9ffd8","#ffbf41")
+
+colnames(dat1)[colnames(dat1) == "Strain"] <- "Strain_type"
+
+#Run ggtree to make a phylogenetic tree
+p <- ggtree(tr = tr2, layout = "fan", open.angle = 15, size = 0.2) 
+
+#Highlight TBDT139
+p$data$label_color <- ifelse(
+  grepl("TBDT139", p$data$label),
+  "highlight",
+  "normal"
+)
+
+#Add tip labels 
+p <- p +
+  geom_tiplab(aes(color = label_color), size = 2.5, offset = 2.5, show.legend = FALSE) +
+  scale_colour_manual(
+    values = c("normal" = "black", "highlight" = "blue"),
+    guide = "none"
+  ) +
+  new_scale_colour() +
+  theme(
+    legend.text = element_text(size = 10),
+    legend.title = element_text(size = 12)
+  )
+
+#Add strain colors and function colors
+p2 <- p +
+      geom_fruit(
+          data = dat1,
+          geom = geom_tile,
+          mapping = aes(x = 1, y = ID, fill = Strain_type),
+          width = 1,
+          color = "white",
+          pwidth = 0.02,
+          offset = 0.03,alpha = 1
+      ) +
+      scale_fill_manual(
+           name = "Strain (TBDT number)",
+           values = Genimi_color,
+           labels = c(
+        expression(italic("Brevundimonas") ~ "sp. MF374 (35)"),
+        expression(italic("Dyella japonica") ~ "MF79 (64)"),
+        expression(italic("Pseudomonas simiae") ~ "WCS417 (34)"),
+        expression(italic("Rhodanobacter") ~ "sp. R179 (35)"),
+        expression(italic("Escherichia coli") ~ "K12 (1)")
+    ),
+           na.translate = FALSE,
+           guide = guide_legend(
+               keywidth = 0.8,
+               keyheight = 0.8,
+               order = 3
+           )
+      ) +
+
+      ggnewscale::new_scale_fill() +   # allow a second fill scale
+
+      geom_fruit(
+          data = dat2,
+          geom = geom_tile,
+          mapping = aes(x = 1, y = ID, fill = Function),
+          width = 1,
+          color = "white",
+          pwidth = 0.065,
+          offset = 0.01,
+          alpha = 1
+      ) +
+
+      scale_fill_manual(
+           name = "Function (TBDT number)",
+           values = Function_color,
+           labels = c("Copper receptor (1)","Fe(3+) dicitrate receptor (1)","Hemoglobin/transferrin/lactoferrin receptor (1)","Siderophore receptor (21)","Vitamin B12 receptor (3)","Unknown receptor (142)"),
+           guide = guide_legend(
+               keywidth = 0.8,
+               keyheight = 0.8,
+               order = 4
+           )
+      ) +
+      xlim(0, max(p$data$x) + 4) +   # expand plotting area 
+      theme(
+           legend.text = element_text(size = 10),
+           legend.title = element_text(size = 12),
+           legend.box.margin = margin(0, 0, 0, 15)   # move legend away from tree
+      )+
+geom_point(
+    data = subset(p$data, label == "TBDT139 (1026aa)"),
+    aes(x = x, y = y),
+    color = "blue",
+    size = 3
+) 
+
+p2
+
+#Highlight clades
+p3 <- p2 +
+geom_hilight(node = 329, fill = "blue", alpha = 0.3) +
+geom_hilight(node = 306, fill = "#fff7bc", alpha = 0.3)
+
+p3
+
+#Save the phylogenetic tree as a tiff file 
+ggsave("Fig. S9B.tif", plot = p3, width = 10, height = 6.5, units = "in", dpi = 300, device = "tiff",compression = "lzw")
+
+#Save the phylogenetic tree as a svg file
+ggsave("Fig. S9B.svg", plot = p3, width = 10, height = 6.5, units = "in", dpi = 300, device = "svg")
+
+```
+
